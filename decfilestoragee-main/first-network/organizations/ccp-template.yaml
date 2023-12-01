@@ -1,0 +1,35 @@
+---
+name: evault-network-store${ORG}
+version: 1.0.0
+client:
+  organization: store${ORG}
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  Org${ORG}:
+    mspid: store${ORG}MSP
+    peers:
+    - peer0.store${ORG}.storage.com
+    certificateAuthorities:
+    - ca.store${ORG}.storage.com
+peers:
+  peer0.org${ORG}.storage.com:
+    url: grpcs://localhost:${P0PORT}
+    tlsCACerts:
+      pem: |
+          ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer0.store${ORG}.storage.com
+      hostnameOverride: peer0.store${ORG}.storage.com
+certificateAuthorities:
+  ca.org${ORG}.storage.com:
+    url: https://localhost:${CAPORT}
+    caName: ca-store${ORG}
+    tlsCACerts:
+      pem: 
+        - |
+          ${CAPEM}
+    httpOptions:
+      verify: false
